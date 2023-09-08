@@ -1,10 +1,5 @@
-const {MongoClient}=require('mongodb');
-
-const client=new MongoClient('mongodb://127.0.0.1:27017')
-
-async function main()
-{
-  await client.connect();
-  console.log('Server Connected');
-}
-main()
+const express=require('express');
+var api=express();
+api.listen(2000,function(){
+    console.log('api server started');
+})

@@ -1,25 +1,19 @@
-const {MongoClient}=require('mongodb');
+const express=require('express');
+var api=express();
+const bodyParser=require("body-parser");
+api.use(bodyParser.json());
+api.get('/',function(request,response){
+    response.send('I am a default root');
+})
 
-const client=new MongoClient('mongodb://127.0.0.1:27017')
-
-async function main()
-{
-    await client.connect();
-    console.log('server connected');
-
-    const db=client.db("makeskilled");
-    console.log('database selected');
-
-    const collection=db.collection('teamdetails');
-    console.log('collection selected');
-
-    const result=await collection.deleteOne({"Name":"Jyotsnika"});
-    console.log(result);
+api.post('/create',function(request,response){
     
-    
-    return 'done';
-}
-main()
-  .then(console.log)
-  .catch(console.error)
-  .finally(()=>client.close())
+    const {name,email}=request.body;
+    response.send(`user ${name} and email id ${email} created successfully`)
+
+})
+
+
+api.listen(301,function(){
+    console.log('api server started');
+})

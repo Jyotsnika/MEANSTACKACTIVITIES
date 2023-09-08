@@ -1,27 +1,14 @@
-const {MongoClient}=require('mongodb');
-
-const client=new MongoClient('mongodb://127.0.0.1:27017')
-
-async function main()
-{
-    await client.connect();
-    console.log('server connected');
-
-    const db=client.db("makeskilled");
-    console.log('database selected');
-
-    const collection=db.collection('teamdetails');
-    console.log('collection selected');
-
-    const result=await collection.insertMany([{"Name":"Jyotsnika","Grade":"A+"},{"Name":"Leela","Grade":"A+"},{"Name":"Ramya","Grade":"A+"}]);
-    console.log(result);
-
-   
-    
-    
-    return 'done';
-}
-main()
-  .then(console.log)
-  .catch(console.error)
-  .finally(()=>client.close())
+const express=require('express');
+var api=express();
+api.get('/',function(request,response){
+    response.send('I am a default root');
+})
+api.get('/friend',function(request,response){
+    response.send("Happy Friendship Day");
+})
+api.get('/enemy',function(request,response){
+    response.send("Be careful!");
+})
+api.listen(5000,function(){
+    console.log('api server started');
+})

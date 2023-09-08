@@ -1,25 +1,18 @@
-const {MongoClient}=require('mongodb');
+const express=require('express');
+var api=express();
+api.get('/',function(request,response){
+    response.send('I am a default root');
+})
 
-const client=new MongoClient('mongodb://127.0.0.1:27017')
-
-async function main()
-{
-    await client.connect();
-    console.log('server connected');
-
-    const db=client.db("makeskilled");
-    console.log('database selected');
-
-    const collection=db.collection('teamdetails');
-    console.log('collection selected');
-
-    const result=await collection.updateMany({"Name":"Jyotsnika"},{$set:{"Grade":"S"}});
-    console.log(result);
+api.get('/user',function(request,response){
+    const username=request.query.username;
     
-    
-    return 'done';
-}
-main()
-  .then(console.log)
-  .catch(console.error)
-  .finally(()=>client.close())
+
+    const pwd=request.query.pwd;
+    response.send(`Welcome ${username},Your password is, ${pwd}!`);
+})
+
+
+api.listen(3011,function(){
+    console.log('api server started');
+})
